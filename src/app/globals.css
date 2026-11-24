@@ -18,8 +18,10 @@
   color-scheme: light;
 }
 
+/* Dark palette. data-theme on <html> (set before paint, see src/lib/theme.ts) wins over the
+   media query, which only applies if the script hasn't run. Keep the two blocks identical. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #13201e;
     --surface: #1e2d2b;
     --sunk: #172523;
@@ -34,6 +36,24 @@
     color-scheme: dark;
   }
 }
+
+:root[data-theme="dark"] {
+  --bg: #13201e;
+  --surface: #1e2d2b;
+  --sunk: #172523;
+  --ink: #e3ebe9;
+  --muted: #9aaba7;
+  --line: #2b3b39;
+  --accent: #4cc2b8;
+  --accent-ink: #06211f;
+  --sun: #f0a35a;
+  --good: #5cc48a;
+  --warn: #e3b04b;
+  color-scheme: dark;
+}
+
+/* `dark:` follows the chosen theme, not just the OS. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme inline {
   --color-bg: var(--bg);
@@ -78,4 +98,73 @@ body {
   .btn-ghost {
     @apply cursor-pointer rounded-md px-2 py-1 text-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-accent;
   }
+  .icon-btn {
+    @apply grid size-11 shrink-0 cursor-pointer place-items-center rounded-full text-muted transition-colors hover:bg-sunk hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+  .menu-row {
+    @apply flex min-h-12 w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-sunk focus-visible:outline-2 focus-visible:outline-accent;
+  }
+
+  /* App menu: a <dialog> pinned right that slides in (full screen on phones). */
+  .menu-panel {
+    position: fixed;
+    inset: 0 0 0 auto;
+    margin: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) 0;
+    width: min(360px, 100%);
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    border: 0;
+    border-left: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    translate: 100% 0;
+    transition:
+      translate 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      display 280ms allow-discrete,
+      overlay 280ms allow-discrete;
+  }
+  .menu-panel[open] {
+    translate: 0 0;
+  }
+  .menu-panel::backdrop {
+    background: rgb(6 17 16 / 0);
+    transition:
+      background-color 280ms,
+      display 280ms allow-discrete,
+      overlay 280ms allow-discrete;
+  }
+  .menu-panel[open]::backdrop {
+    background: rgb(6 17 16 / 0.45);
+  }
+  @starting-style {
+    .menu-panel[open] {
+      translate: 100% 0;
+    }
+    .menu-panel[open]::backdrop {
+      background: rgb(6 17 16 / 0);
+    }
+  }
+  @media (width < 40rem) {
+    .menu-panel {
+      width: 100%;
+      border-left: 0;
+    }
+  }
+  .menu-subpanel {
+    transition: translate 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .menu-panel,
+    .menu-panel::backdrop,
+    .menu-subpanel {
+      transition: none;
+    }
+  }
+}
+
+/* No page scroll behind the open menu. */
+html:has(.menu-panel[open]) {
+  overflow: hidden;
 }

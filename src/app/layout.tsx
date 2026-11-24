@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { InlineScript } from "@/components/InlineScript";
+import { themeScript } from "@/lib/themeScript";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({ variable: "--font-display", subsets: ["latin"], weight: ["500", "700"] });
@@ -18,7 +20,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable} h-full antialiased`}>
+    // suppressHydrationWarning: the inline script sets data-theme before React hydrates.
+    <html
+      lang="en"
+      className={`${display.variable} ${sans.variable} ${mono.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Theme from the lifehq-theme cookie (or the device), applied before first paint. */}
+        <InlineScript html={themeScript} />
+      </head>
       <body className="min-h-full">{children}</body>
     </html>
   );

@@ -25,8 +25,14 @@ Planning, roadmap and decisions happen in his LifeHQ chat in the Claude app; thi
 - `src/lib/useNow.ts`: the clock. Never call `new Date()`/`Date.now()` during render or in server
   components (Cache Components fails the prerender); use `useNow()` or call it inside event handlers/effects.
 - `src/config.ts`: non-private settings only (name, home city coordinates).
-- Theme: colour tokens in `src/app/globals.css` (`bg surface sunk ink muted line accent sun good warn`),
-  with light and dark palettes. Reuse `.card .label .field .btn .btn-primary .btn-ghost`.
+- Theme setting: `src/lib/theme.ts` (`useTheme()`; system/light/dark in the `lifehq-theme` cookie). The inline
+  script from `src/lib/themeScript.ts` sets `data-theme` on `<html>` before paint, so the root layout stays static
+  (never read `cookies()` there). Use the `dark:` variant; it follows `data-theme`.
+- App menu: `src/components/menu/`. `menuItems.ts` is the menu's registry (label, icon, optional current `Value`,
+  sub-panel `Panel`); add a setting or module page = a panel component + one entry there.
+- Theme: colour tokens in `src/app/globals.css` (`bg surface sunk ink muted line accent sun sun-fill good warn`;
+  `sun` for text/icons, `sun-fill` for shapes), with light and dark palettes. Reuse `.card .label .field .btn
+  .btn-primary .btn-ghost .icon-btn .menu-row`.
 
 ## Rules
 - The repo is PUBLIC (recruiters may read it). Never commit secrets or personal data:
