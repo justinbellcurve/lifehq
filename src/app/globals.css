@@ -1,29 +1,31 @@
 @import "tailwindcss";
 
-/* LifeHQ palette: sea teal accent, warm "sun" for travel, cool neutrals. */
+/* LifeHQ design system: forest ink, sea teal accent, warm "sun" for travel.
+   `sun` is for text/icons; `sun-fill` is for shapes (same in both themes). */
 :root {
-  --bg: #edf1f0;
-  --surface: #ffffff;
-  --sunk: #f5f8f7;
+  --bg: #ffffff;
+  --surface: #f6f8f7;
+  --sunk: #eef2f1;
   --ink: #13201e;
-  --muted: #5a6a67;
-  --line: #d5dedb;
+  --muted: #55635f;
+  --line: #dce3e1;
   --accent: #0b7a75;
   --accent-ink: #ffffff;
-  --sun: #c9721f;
+  --sun: #b8651a;
   --good: #2f8a55;
   --warn: #b9770e;
+  --sun-fill: #f0a35a;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0d1413;
-    --surface: #152020;
-    --sunk: #111a19;
+    --bg: #13201e;
+    --surface: #1e2d2b;
+    --sunk: #172523;
     --ink: #e3ebe9;
-    --muted: #93a3a0;
-    --line: #253432;
+    --muted: #9aaba7;
+    --line: #2b3b39;
     --accent: #4cc2b8;
     --accent-ink: #06211f;
     --sun: #f0a35a;
@@ -43,6 +45,7 @@
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
   --color-sun: var(--sun);
+  --color-sun-fill: var(--sun-fill);
   --color-good: var(--good);
   --color-warn: var(--warn);
   --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;

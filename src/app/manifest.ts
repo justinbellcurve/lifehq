@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Justin's personal home base.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0d1413",
-    theme_color: "#0b7a75",
+    background_color: "#13201e",
+    theme_color: "#13201e",
     icons: [
       { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { src: "/icon-512.png", sizes: "512x512", type: "image/png" },

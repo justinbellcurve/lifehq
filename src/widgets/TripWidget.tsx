@@ -52,7 +52,7 @@ export function TripWidget() {
 
   return (
     <div className="grid gap-4">
-      <div className="grid gap-1 rounded-xl bg-gradient-to-br from-accent/20 to-sun/20 p-4">
+      <div className="grid gap-1 rounded-xl bg-gradient-to-br from-accent/20 to-sun-fill/20 p-4">
         <span className="label">{trip.title}</span>
         <p className="font-display text-5xl font-bold tabular-nums">
           {days === null ? "–" : days === 0 ? "Today" : days}
